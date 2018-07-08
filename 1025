@@ -1,0 +1,108 @@
+/*1025 反转链表 (25)（25 分）
+ *给定一个常数K以及一个单链表L，请编写程序将L中每K个结点反转。例如：给定L为1→2→3→4→5→6，K为3，则输出应该为3→2→1→6→5→4；如果K为4，则输出应该为4→3→2→1→5→6，即最后不到K个元素不反转。
+
+ *输入格式：
+
+ *每个输入包含1个测试用例。每个测试用例第1行给出第1个结点的地址、结点总个数正整数N(<= 10^5^)、以及正整数K(<=N)，即要求反转的子链结点的个数。结点的地址是5位非负整数，NULL地址用-1表示。
+
+ *接下来有N行，每行格式为：
+
+ *Address Data Next
+
+ *其中Address是结点地址，Data是该结点保存的整数数据，Next是下一结点的地址。
+
+ *输出格式：
+
+ *对每个测试用例，顺序输出反转后的链表，其上每个结点占一行，格式与输入相同。
+
+ *输入样例：
+
+ *00100 6 4
+ *00000 4 99999
+ *00100 1 12309
+ *68237 6 -1
+ *33218 3 00000
+ *99999 5 68237
+ *12309 2 33218 
+ *输出样例：
+
+ *00000 4 33218
+ *33218 3 12309
+ *12309 2 00100
+ *00100 1 99999
+ *99999 5 68237
+ *68237 6 -1
+ */
+ 
+#include<stdio.h>
+struct node
+{
+	int address;
+	int data;
+	int next;
+};
+int main()
+{
+	int head, n, k;
+	int i, j;
+	scanf("%d %d %d", &head, &n, &k);
+
+	struct node *temp;
+	struct node **Node, **p;
+	Node = (struct node**)malloc(sizeof(struct node)*n);
+	for (i = 0; i < n; i++)
+	{
+		Node[i] = (struct node*)malloc(sizeof(struct node));
+		scanf("%d %d %d", &Node[i]->address, &Node[i]->data, &Node[i]->next);
+	}
+
+	for (i = 0; i < n; i++)
+	{
+		for (j = i; j < n; j++)
+		{
+			if (i == 0 && Node[j]->address == head)
+			{
+				temp = Node[0];
+				Node[0] = Node[j];
+				Node[j] = temp;
+				break;
+			}
+			if (i!=0 && Node[j]->address == Node[i - 1]->next)
+			{
+				temp = Node[j];
+				Node[j] = Node[i];
+				Node[i] = temp;
+				break;
+			}
+		}
+		if (Node[i]->next == -1)
+		{
+			n = i + 1;
+		}
+	}
+
+	for (i = 0; i < n / k; i++)
+	{
+		p = Node + i * k;
+		for (j = 0; j < k / 2; j++)
+		{
+			temp = p[j];
+			p[j] = p[k - j - 1];
+			p[k - j - 1] = temp;
+		}
+	}
+
+	for (i = 0; i < n-1; i++)
+	{
+		printf("%05d %d %05d\n", Node[i]->address, Node[i]->data, Node[i+1]->address);
+	}
+	printf("%05d %d -1\n", Node[n-1]->address, Node[n-1]->data);
+
+	for (i = 0; i < n; i++)
+	{
+		free(Node[i]);
+	}
+	free(Node);
+	system("pause");
+	return 0;
+}
