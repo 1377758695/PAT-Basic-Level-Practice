@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<ctype.h>
+
+int main() {
+	char str1[80], str2[80];
+	char bad[80];
+	int i, j, flag,count = 0;
+
+	scanf("%s", str1);
+	getchar();
+	scanf("%s", str2);
+
+	for (i = 0; str1[i]; i++) {
+		str1[i] = toupper(str1[i]);
+	}
+	for (i = 0; str2[i]; i++) {
+		str2[i] = toupper(str2[i]);
+	}
+	for (i = 0; str1[i]; i++) {
+		flag = 0;
+		for (j = 0; str2[j]; j++) {
+			if (str1[i] == str2[j]) {
+				flag = 1;
+				break;
+			}
+		}
+		if (!flag) {
+			if (count == 0) {
+				bad[count++] = str1[i];
+			}
+			else {
+				for (j = 0; j < count; j++) {
+					if (str1[i] == bad[j]) {
+						break;
+					}
+				}
+				if (j == count) {
+					bad[count++] = str1[i];
+				}
+			}
+		}
+	}
+	for (j = 0; j < count; j++) {
+		printf("%c", bad[j]);
+	}
+
+	system("pause");
+	return 0;
+}
