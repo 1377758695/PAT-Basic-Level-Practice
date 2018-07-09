@@ -1,0 +1,27 @@
+#include<stdio.h>
+
+int main() {
+	int n, i, j;
+	int num, score, max;
+	scanf("%d", &n);
+	int *grade = (int *)malloc(sizeof(int)*(n+1));
+	for (i = 1; i <= n; i++) {
+		grade[i] = 0;
+	}
+
+	for (i = 1; i <= n ; i++) {
+		scanf("%d %d", &num, &score);
+		grade[num] += score;
+	}
+	max = 1;
+	for (i = 1; i <= n; i++) {
+		if (grade[max] < grade[i]) {
+			max = i;
+		}
+	}
+	printf("%d %d", max, grade[max]);
+
+	free(grade);
+	system("pause");
+	return 0;
+}
