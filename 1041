@@ -1,0 +1,40 @@
+#include<stdio.h>
+
+struct Mystruct {
+	char c[14];
+	int test;
+	int seat;
+};
+
+int main() {
+	int n, i, j , count;
+	int *find;
+	struct Mystruct *students;
+
+	scanf("%d", &n);
+	getchar();
+	students = (struct Mystruct*)malloc(sizeof(struct Mystruct)*n);
+	for (i = 0; i < n; i++) {
+		scanf("%s", students[i].c);
+		scanf("%d %d", &students[i].test, &students[i].seat);
+		getchar();
+	}
+	scanf("%d", &count);
+	find = (int *)malloc(sizeof(int)*count);
+	for (i = 0; i < count; i++) {
+		scanf("%d", &find[i]);
+	}
+
+	for (i = 0; i < count; i++) {
+		for (j = 0; j < n; j++) {
+			if (students[j].test == find[i]) {
+				printf("%s %d\n", students[j].c, students[j].seat);
+			}
+		}
+	}
+
+	free(find);
+	free(students);
+	system("pause");
+	return 0;
+}
