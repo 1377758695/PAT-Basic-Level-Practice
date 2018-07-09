@@ -1,0 +1,23 @@
+#include<stdio.h>
+#include<ctype.h>
+
+int main()
+{
+	int list[128] = { 0 }, bad = 0, input;
+	while ((bad = getchar()) != '\n') {
+		list[bad] = 1;
+		list[tolower(bad)] = 1;
+	}
+	if (list['+'] == 1) {
+		for (int i = 65; i < 91; i++) {
+			list[i] = 1;
+		}
+	}
+	while ((input = getchar()) != '\n') {
+		if (list[input] == 0) {
+			printf("%c", input);
+		}
+	}
+	system("pause");
+	return 0;
+}
